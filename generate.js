@@ -12,6 +12,7 @@ import tzdata from "tzdata";
 
 import abbreviations from "./abbreviations.json";
 import formatTimeZone from "./lib/formatTimeZone.js";
+import { convertIso2ToIso3 } from "@trustedshops-public/js-iso3166-converter";
 
 const timeZonesLinks = Object.entries(tzdata.zones).filter(([, value]) => {
   return typeof value === "string";
@@ -248,15 +249,18 @@ async function run() {
         alternativeTimeZoneName =
           alternativeNameCorrections[timeZoneName] || timeZoneName;
       }
+      const countryCodeIso3 = convertIso2ToIso3(countryCode);
+      // console.log(countryCodeIso3);
 
       const rawTimeZone = {
         name: timeZoneName,
         alternativeName: alternativeTimeZoneName,
-        group,
-        continentCode,
-        continentName: continents[continentCode],
+        // group,
+        // continentCode,
+        // continentName: continents[continentCode],
         countryName: countries[countryCode],
-        countryCode,
+        // countryCodeIso2: countryCode,
+        countryCodeIso3,
         mainCities,
         rawOffsetInMinutes: parseFloat(
           timeZonesInfo[timeZoneName].rawOffset * 60,
@@ -292,9 +296,9 @@ async function run() {
       return;
     }
 
-    if (!timeZone.group.includes(link)) {
-      timeZone.group.push(link);
-    }
+    // if (!timeZone.group.includes(link)) {
+    //   timeZone.group.push(link);
+    // }
   });
 
   fs.writeFileSync(

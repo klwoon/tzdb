@@ -139,5 +139,8 @@
       "before 3am on Monday"
     ],
     "groupName": "all"
+  },
+  "dependencies": {
+    "@trustedshops-public/js-iso3166-converter": "^1.2.0"
   }
 }
